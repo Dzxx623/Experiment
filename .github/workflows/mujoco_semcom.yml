@@ -1,0 +1,30 @@
+name: MuJoCo semantic teleoperation experiment
+on:
+  push:
+    branches: [semcom-mujoco]
+  workflow_dispatch:
+
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install -r mujoco_semcom/requirements.txt
+      - name: Smoke test
+        working-directory: mujoco_semcom
+        run: python smoke_test.py
+      - name: Run paired MuJoCo experiment
+        working-directory: mujoco_semcom
+        run: |
+          python experiment.py --episodes 80 --profiles wifi_congested poor_4g --distractors 0 3 5 --out results/raw_results.csv
+          python analyze.py results/raw_results.csv --outdir results
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: mujoco-semcom-results
+          path: mujoco_semcom/results/
