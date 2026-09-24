@@ -1,0 +1,38 @@
+<mujoco model="teleop_semantic_planar_arm">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" integrator="RK4" gravity="0 0 -9.81"/>
+  <visual><global offwidth="640" offheight="480"/></visual>
+  <default><joint damping="0.8" armature="0.02"/><geom friction="0.8 0.05 0.02" density="500"/></default>
+  <worldbody>
+    <light pos="0 0 2.5" dir="0 0 -1"/>
+    <geom name="floor" type="plane" size="1.2 1.2 0.05" rgba="0.92 0.92 0.92 1" contype="0" conaffinity="0"/>
+    <camera name="overhead" pos="0 0 2.2" quat="1 0 0 0"/>
+    <body name="base" pos="0 0 0.08">
+      <geom type="cylinder" size="0.075 0.04" rgba="0.15 0.15 0.18 1" contype="0" conaffinity="0"/>
+      <body name="link1"><joint name="j1" type="hinge" axis="0 0 1" limited="false"/>
+        <geom type="capsule" fromto="0 0 0 0.34 0 0" size="0.025" rgba="0.15 0.35 0.85 1" contype="0" conaffinity="0"/>
+        <body name="link2" pos="0.34 0 0"><joint name="j2" type="hinge" axis="0 0 1" limited="false"/>
+          <geom type="capsule" fromto="0 0 0 0.30 0 0" size="0.023" rgba="0.18 0.42 0.90 1" contype="0" conaffinity="0"/>
+          <body name="link3" pos="0.30 0 0"><joint name="j3" type="hinge" axis="0 0 1" limited="false"/>
+            <geom type="capsule" fromto="0 0 0 0.24 0 0" size="0.021" rgba="0.22 0.50 0.95 1" contype="0" conaffinity="0"/>
+            <site name="eef" pos="0.24 0 0" size="0.035" type="sphere" rgba="0.05 0.10 0.25 1"/>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="target" mocap="true" pos="0.68 -0.18 0.08"><geom type="cylinder" size="0.055 0.012" rgba="0.10 0.80 0.20 0.85" contype="0" conaffinity="0"/></body>
+    <body name="obs0" mocap="true"><geom type="cylinder" size="0.070 0.035" rgba="0.90 0.15 0.12 0.85" contype="0" conaffinity="0"/></body>
+    <body name="obs1" mocap="true"><geom type="cylinder" size="0.070 0.035" rgba="0.90 0.15 0.12 0.85" contype="0" conaffinity="0"/></body>
+    <body name="obs2" mocap="true"><geom type="cylinder" size="0.070 0.035" rgba="0.90 0.15 0.12 0.85" contype="0" conaffinity="0"/></body>
+    <body name="obs3" mocap="true"><geom type="cylinder" size="0.060 0.035" rgba="0.65 0.25 0.65 0.75" contype="0" conaffinity="0"/></body>
+    <body name="obs4" mocap="true"><geom type="cylinder" size="0.060 0.035" rgba="0.65 0.25 0.65 0.75" contype="0" conaffinity="0"/></body>
+    <body name="obs5" mocap="true"><geom type="cylinder" size="0.060 0.035" rgba="0.65 0.25 0.65 0.75" contype="0" conaffinity="0"/></body>
+    <body name="obs6" mocap="true"><geom type="cylinder" size="0.060 0.035" rgba="0.65 0.25 0.65 0.75" contype="0" conaffinity="0"/></body>
+    <body name="obs7" mocap="true"><geom type="cylinder" size="0.060 0.035" rgba="0.65 0.25 0.65 0.75" contype="0" conaffinity="0"/></body>
+  </worldbody>
+  <actuator>
+    <velocity name="j1_vel" joint="j1" kv="18" ctrllimited="true" ctrlrange="-2.2 2.2"/>
+    <velocity name="j2_vel" joint="j2" kv="18" ctrllimited="true" ctrlrange="-2.2 2.2"/>
+    <velocity name="j3_vel" joint="j3" kv="14" ctrllimited="true" ctrlrange="-2.2 2.2"/>
+  </actuator>
+</mujoco>
